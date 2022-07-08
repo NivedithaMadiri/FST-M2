@@ -30,11 +30,12 @@ public class Activity2 {
     public void getrequest() throws IOException {
         File outputJSON = new File("src/test/java/resources/userresponse.json");
         Response response = given().contentType(ContentType.JSON).
-                pathParam("username",equalTo("JamesRathod")).when().get(baseURI+"/{username}");
+                pathParam("username","JamesRathod").when().get(baseURI+"/{username}");
         String resBody = response.getBody().asPrettyString();
         outputJSON.createNewFile();
         FileWriter writer = new FileWriter(outputJSON.getPath());
         writer.write(resBody);
+        writer.close();
         response.then().body("id",equalTo(1123));
         response.then().body("username",equalTo("JamesRathod"));
         response.then().body("firstName", equalTo("James"));
@@ -47,7 +48,7 @@ public class Activity2 {
     @Test(priority = 3)
     public void deleterequest(){
         Response response = given().contentType(ContentType.JSON).
-                pathParam("username",equalTo("JamesRathod")).when().delete(baseURI + "/{username}");
+                pathParam("username","JamesRathod").when().delete(baseURI + "/{username}");
         response.then().body("code", equalTo(200));
         response.then().body("message", equalTo("JamesRathod"));
 
